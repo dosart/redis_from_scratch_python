@@ -1,0 +1,26 @@
+name: Python Linting and Formatting
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          make install
+
+      - name: Lint
+        run: make lint
+
+      - name: Format
+        run: make format
