@@ -6,6 +6,10 @@ install: ## Install dependencies
 format: ## Run code formatter
 	poetry run black .
 
+fix:
+	@make format
+	poetry run ruff check --fix .
+
 lint: ## Run linter
 	poetry run ruff check . 
 
