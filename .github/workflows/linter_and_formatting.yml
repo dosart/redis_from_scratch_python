@@ -16,7 +16,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+          POETRY = "/opt/poetry"
+          curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 -
           make install
 
       - name: Lint
