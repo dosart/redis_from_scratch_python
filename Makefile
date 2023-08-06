@@ -1,21 +1,21 @@
-.PHONY: run_docker install lint selfcheck check build
-POETRY = $(POETRY_HOME)/venv/bin/poetry 
-
-build_docker: ## Build docker image with name redis_from_scratch_python
-	docker build -t redis_from_scratch_python:latest .
-
-run_docker: ## Run docker image with name redis_from_scratch_python
-	docker run redis_from_scratch_python
+.PHONY: install test run_test fix format lint selfcheck check build
+POETRY = $(POETRY_HOME)/venv/bin/poetry
 
 install: ## Install dependencies
 	$(POETRY) install
 
-format: ## Run code formatter
-	$(POETRY) run black .
+test: ## Run tests in docker
+	docker build -t redis_from_scratch_python:latest --target test .
+
+run_test: ## Run tests with poetry
+	$(POETRY) run pytest tests
 
 fix: ## Fix linter warnings
 	@make format
 	$(POETRY) run ruff check --fix .
+
+format: ## Run code formatter
+	$(POETRY) run black .
 
 lint: ## Run linter
 	$(POETRY) run ruff check . 
